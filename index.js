@@ -13,18 +13,22 @@ app.use( (req,res,next) =>{
     res.setHeader('Cache-Control','no-cache');
     next();
 });
-
+const productRoutes = require('./routes/product');
 const Login = require('./routes/Login')
-
+const Me = require('./routes/ME')
 const Signup = require('./routes/Signup')
-
+const Profile = require('./routes/Profile');
 app.use('/signUp',Signup)
 
-
-
+app.use('/me',Me)
+app.use('/products', productRoutes);
+app.use('/profile', Profile);
 
 app.use('/login',Login)
+app.use((req, res, next) => {
+    res.status(404).json({ error: "Route not found" });
+});
 
-app.listen(3000, '192.168.2.255', () => {
-    console.log('Server is running on http://0.0.0.0:3000');
+app.listen(3007,  () => {
+    console.log('Server is running on http://0.0.0.0:3007');
 });
